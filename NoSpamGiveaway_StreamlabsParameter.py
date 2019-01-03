@@ -10,9 +10,9 @@ import errno
 from random import SystemRandom
 from datetime import datetime
 
-ScriptName = "Random Unique User Parameter"
+ScriptName = "No Spam Giveaway"
 Website = "https://sehales.net/"
-Description = "Gives out a random unique user who was not already saved to the winners list or falls back to a random user in case there are no unique users left.\nFiles: Chatbot\\Services\\Scripts\\Data\\ winners.csv, users.txt"
+Description = "The parameter selects a random winner and saves usernames, prizes and times of winning to a csv file.\nFiles: Chatbot\\Services\\Scripts\\Data\\ winners.csv, users.txt"
 Creator = "Sehales"
 Version = "2.0.0"
 
