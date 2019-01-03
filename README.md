@@ -1,3 +1,3 @@
-# No Spam Giveaway
+# NoSpamGiveaway
 Giveaway script for the popular [Streamlabs Chatbot](https://streamlabs.com/).
 
