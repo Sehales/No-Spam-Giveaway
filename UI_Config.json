@@ -1,0 +1,59 @@
+{ 
+    "output_file": "settings.json", 
+     
+    "btnOpenFolder": {
+        "type": "button",
+        "label": "Open Data Folder",
+        "tooltip": "Opens the folder which contains all files used by the script.",
+        "function": "openFolder",
+        "wsevent": "EVENT_OPEN_FOLDER",
+        "group": "General"
+    }, 
+    "btnOpenBlacklist": {
+        "type": "button",
+        "label": "Open Blacklist File",
+        "tooltip": "Opens the blacklist file. One username per line.",
+        "function": "openBlacklist",
+        "wsevent": "EVENT_OPEN_BLACKLIST",
+        "group": "General"
+    },    
+    "btnOpenWinners": {
+        "type": "button",
+        "label": "Open Winners File",
+        "tooltip": "Opens the current winner list file.",
+        "function": "openWinners",
+        "wsevent": "EVENT_OPEN_WINNERS",
+        "group": "General"
+    },
+    "btnOpenUnique": {
+        "type": "button",
+        "label": "Open Unique Users File",
+        "tooltip": "Opens the text file which stores all usernames not eligable to win again.",
+        "function": "openUnique",
+        "wsevent": "EVENT_OPEN_UNIQUE",
+        "group": "General"
+    },     
+    "btnReset": {
+        "type": "button",
+        "label": "Reset Unique Users",
+        "tooltip": "Resets the list of unique users, allowing them to win again.",
+        "function": "resetUniqueUsers",
+        "wsevent": "EVENT_RESET_UNIQUE_USERS",
+        "group": "Use With Caution"
+    },    
+    "btnRotate": {
+        "type": "button",
+        "label": "Backup Winners File",
+        "tooltip": "Creates an empty winners.csv and renames the old one to winners_TIMESTAMP.csv where TIMESTAMP is the current time.",
+        "function": "rotateWinnersFile",
+        "wsevent": "EVENT_ROTATE_WINNERS",
+        "group": "Use With Caution"
+    },
+    "parameter": { 
+        "type": "textbox", 
+        "value": "$randomuniqueuser", 
+        "label": "Parameter Name", 
+        "tooltip": "The name of the parameter used in commands",
+        "group": "General"
+    }
+}
