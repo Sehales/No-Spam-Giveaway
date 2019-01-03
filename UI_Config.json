@@ -1,5 +1,5 @@
 { 
-    "output_file": "settings.json", 
+    "output_file": "data/settings.json", 
      
     "btnOpenFolder": {
         "type": "button",
@@ -49,11 +49,32 @@
         "wsevent": "EVENT_ROTATE_WINNERS",
         "group": "Use With Caution"
     },
+    "send_whisper": {
+        "type": "checkbox",
+        "value": false,
+        "label": "Send Whisper Message",
+        "tooltip": "Enable to automatically send a whisper message informing the random user who was selected.",
+        "group": "General"
+    },
+    "whisperMessage": { 
+        "type": "textbox", 
+        "value": "Congratulations $user you have won $msg!", 
+        "label": "Whisper Message", 
+        "tooltip": "The message which will be sent to the winner (randomUniqueUser)\nDefault: \"Congratulations $user you have won $msg!\"",
+        "group": "General"
+    },
     "parameter": { 
         "type": "textbox", 
-        "value": "$randomuniqueuser", 
-        "label": "Parameter Name", 
-        "tooltip": "The name of the parameter used in commands",
+        "value": "$randomUniqueUser", 
+        "label": "Unique User Parameter", 
+        "tooltip": "The name of the unique user parameter used in commands",
+        "group": "General"
+    },
+    "last_parameter": { 
+        "type": "textbox", 
+        "value": "$lastRandomUniqueUser", 
+        "label": "TO BE IMPLEMENTED Last Unique User Parameter", 
+        "tooltip": "The name of the last unique user parameter used in commands",
         "group": "General"
     }
 }
