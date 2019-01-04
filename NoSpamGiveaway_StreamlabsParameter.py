@@ -33,11 +33,12 @@ class Settings(object):
                 self.__dict__ = json.load(f, encoding="utf-8")
         except:
                 Parent.Log("NSG", "Couldn't load settings. Using default values.")
-                self.parameter = "$randomuniqueuser"
-                self.last_parameter = "$lastRandomUniqueUser"
+                self.parameter = "$nsgUser"
+                self.last_parameter = "$lastNsgUser"
                 self.whisperMessage = "Congratulations $user you have won $msg!"
                 self.send_whisper = False
                 self.unique_users = True
+                self.remove_moderators = True
                 Parent.Log("NSG", str(self.__dict__))
 
     def reload(self, jsondata):
@@ -48,6 +49,8 @@ class Settings(object):
 def Init():
     global ruuSettings
     ruuSettings = Settings(settingsFile)
+    global lastUser
+    lastUser = ""
     #just making sure the directory and file exist
     try:
         if not os.path.isdir(dataFolder):
@@ -63,9 +66,15 @@ def Init():
 
 #External
 def Parse(parseString,user,target,message):
+    Parent.Log("NSG", parseString + " - " + user + " - " + target + " - " + message)
     global ruuSettings
     if ruuSettings.parameter in parseString:
-        return parseString.replace(ruuSettings.parameter, getRandomUniqueActiveUser(message))
+        parseString = parseString.replace(ruuSettings.parameter, getRandomUniqueActiveUser(message))
+
+    if ruuSettings.last_parameter in parseString:
+        global lastUser
+        parseString = parseString.replace(ruuSettings.last_parameter, lastUser)
+
     return parseString
 
 
@@ -77,12 +86,17 @@ def ReloadSettings(jsonData):
 
 
 def getRandomUniqueActiveUser(message):
+    global ruuSettings
     saveUnique = True
     activeUsers = Parent.GetActiveUsers()
-    savedUsers = readSavedUserList()
     blacklist = readBlacklist()
 
-    userList = [x for x in activeUsers if not isStaff(x) and x not in blacklist and x not in savedUsers]
+    userList = None
+    if ruuSettings.unique_users:
+        savedUsers = readSavedUserList()
+        userList = [x for x in activeUsers if not isStaff(x) and x not in blacklist and x not in savedUsers]
+    else:
+        userList = [x for x in activeUsers if not isStaff(x) and x not in blacklist]
 
     #check if any users are left, otherwise just pick a lucky winner from the original list
     if len(userList) == 0:
@@ -98,12 +112,14 @@ def getRandomUniqueActiveUser(message):
         saveUser(userString)
 
     saveWinner(userString,message)
+    global lastUser
+    lastUser = userString
     return userString
 
-################## TODO make optional
 # Check if the user is a staff member
 def isStaff(userString):
-    if Parent.HasPermission(userString, "Caster", "") or Parent.HasPermission(userString, "Moderator", "") or Parent.HasPermission(userString, "Editor", ""):
+    global ruuSettings
+    if Parent.HasPermission(userString, "Caster", "") or (ruuSettings.remove_moderators and Parent.HasPermission(userString, "Moderator", "")):
         Parent.Log("NSG", "Removed staff user %s from draw" % userString)
         return True
     return False

@@ -55,6 +55,13 @@
         "tooltip": "Enable the unique user selection to ensure no user is chosen twice until the unique users list was reset or this setting is turned off.",
         "group": "General"
     },
+    "remove_moderators": {
+        "type": "checkbox",
+        "value": true,
+        "label": "Remove Moderators",
+        "tooltip": "Enable to remove moderators from the random user draws, unless there are no users left.",
+        "group": "General"
+    },
     "whisperMessage": { 
         "type": "textbox", 
         "value": "Congratulations $user you have won $msg!", 
@@ -71,14 +78,14 @@
     },
     "parameter": { 
         "type": "textbox", 
-        "value": "$randomUniqueUser", 
+        "value": "$nsgUser", 
         "label": "Unique User Parameter", 
         "tooltip": "The name of the unique user parameter used in commands",
         "group": "General"
     },
     "last_parameter": { 
         "type": "textbox", 
-        "value": "$lastRandomUniqueUser", 
+        "value": "$lastNsgUser", 
         "label": "TO BE IMPLEMENTED Last Unique User Parameter", 
         "tooltip": "The name of the last unique user parameter used in commands",
         "group": "General"
