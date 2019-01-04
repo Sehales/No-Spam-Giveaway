@@ -32,7 +32,13 @@ class Settings(object):
             with codecs.open(settingsfile, encoding="utf-8", mode="r") as f:
                 self.__dict__ = json.load(f, encoding="utf-8")
         except:
+                Parent.Log("NSG", "Couldn't load settings. Using default values.")
                 self.parameter = "$randomuniqueuser"
+                self.last_parameter = "$lastRandomUniqueUser"
+                self.whisperMessage = "Congratulations $user you have won $msg!"
+                self.send_whisper = False
+                self.unique_users = True
+                Parent.Log("NSG", str(self.__dict__))
 
     def reload(self, jsondata):
         """ Reload settings from AnkhBot user interface by given json data. """
@@ -51,7 +57,7 @@ def Init():
         codecs.open(blacklistFile, encoding="utf-8", mode="a").close()
         codecs.open(winnerListFile, encoding="utf-8", mode="a").close()
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -67,7 +73,7 @@ def Parse(parseString,user,target,message):
 def ReloadSettings(jsonData):
     global ruuSettings
     ruuSettings.reload(jsonData)
-    Parent.Log("RUU", "Reloaded settings!")
+    Parent.Log("NSG", "Reloaded settings!")
 
 
 def getRandomUniqueActiveUser(message):
@@ -81,7 +87,7 @@ def getRandomUniqueActiveUser(message):
     #check if any users are left, otherwise just pick a lucky winner from the original list
     if len(userList) == 0:
         userList = activeUsers
-        Parent.Log("RUU", "Warning: no unique active users left; picked random user!")
+        Parent.Log("NSG", "Warning: no unique active users left; picked random user!")
         saveUnique = False
 
     index = sysRandom.randint(0,len(userList)-1)
@@ -98,7 +104,7 @@ def getRandomUniqueActiveUser(message):
 # Check if the user is a staff member
 def isStaff(userString):
     if Parent.HasPermission(userString, "Caster", "") or Parent.HasPermission(userString, "Moderator", "") or Parent.HasPermission(userString, "Editor", ""):
-        Parent.Log("RUU", "Removed staff user %s from draw" % userString)
+        Parent.Log("NSG", "Removed staff user %s from draw" % userString)
         return True
     return False
 
@@ -109,7 +115,7 @@ def readSavedUserList():
         with codecs.open(userListFile, encoding="utf-8", mode="r") as f:
             users = f.read().splitlines()
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
     return users
 
@@ -120,7 +126,7 @@ def readBlacklist():
         with codecs.open(blacklistFile, encoding="utf-8", mode="r") as f:
             blacklist = f.read().splitlines()
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
     return blacklist
 
@@ -131,7 +137,7 @@ def saveUser(userString):
         with codecs.open(userListFile, encoding="utf-8", mode="a") as f:
             f.write("%s\n" % userString)
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -141,7 +147,7 @@ def saveWinner(userString, message):
         with codecs.open(winnerListFile, encoding="utf-8", mode="a") as f:
             f.write("%s,%s,%s\n" % (userString, message, datetime.now().strftime("%Y%m%d-%H_%M_%S")))
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -149,9 +155,9 @@ def resetUniqueUsers():
     try:
         with codecs.open(userListFile, encoding="utf-8", mode="r+") as f:
             f.truncate(0)
-            Parent.Log("RUU", "Unique users reset")
+            Parent.Log("NSG", "Unique users reset")
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -161,9 +167,9 @@ def rotateWinnersFile():
         shutil.move(winnerListFile, newFile)
         wf = codecs.open(winnerListFile, encoding="utf-8", mode="a")
         wf.close()
-        Parent.Log("RUU", "Winners file backup: " + newFile)
+        Parent.Log("NSG", "Winners file backup: " + newFile)
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -171,7 +177,7 @@ def openFolder():
     try:
         os.startfile(dataFolder)
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -179,7 +185,7 @@ def openWinners():
     try:
         os.startfile(winnerListFile)
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -187,7 +193,7 @@ def openUnique():
     try:
         os.startfile(userListFile)
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise
 
 
@@ -195,5 +201,5 @@ def openBlacklist():
     try:
         os.startfile(blacklistFile)
     except:
-        Parent.Log("RUU", "Unexpected error: " + str(sys.exc_info()))
+        Parent.Log("NSG", "Unexpected error: " + str(sys.exc_info()))
         raise

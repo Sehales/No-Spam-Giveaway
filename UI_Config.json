@@ -1,6 +1,5 @@
 { 
     "output_file": "data/settings.json", 
-     
     "btnOpenFolder": {
         "type": "button",
         "label": "Open Data Folder",
@@ -49,18 +48,25 @@
         "wsevent": "EVENT_ROTATE_WINNERS",
         "group": "Use With Caution"
     },
-    "send_whisper": {
+    "unique_users": {
         "type": "checkbox",
-        "value": false,
-        "label": "Send Whisper Message",
-        "tooltip": "Enable to automatically send a whisper message informing the random user who was selected.",
+        "value": true,
+        "label": "Unique Users",
+        "tooltip": "Enable the unique user selection to ensure no user is chosen twice until the unique users list was reset or this setting is turned off.",
         "group": "General"
     },
     "whisperMessage": { 
         "type": "textbox", 
         "value": "Congratulations $user you have won $msg!", 
         "label": "Whisper Message", 
-        "tooltip": "The message which will be sent to the winner (randomUniqueUser)\nDefault: \"Congratulations $user you have won $msg!\"",
+        "tooltip": "The message which will be sent to the winner (randomUniqueUser) Default: 'Congratulations $user you have won $msg!'",
+        "group": "General"
+    },
+    "send_whisper": {
+        "type": "checkbox",
+        "value": false,
+        "label": "Send Whisper Message",
+        "tooltip": "Enable to automatically send a whisper message informing the random user who was selected.",
         "group": "General"
     },
     "parameter": { 
