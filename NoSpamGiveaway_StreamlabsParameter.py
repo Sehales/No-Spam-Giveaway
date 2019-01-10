@@ -35,8 +35,6 @@ class Settings(object):
                 Parent.Log("NSG", "Couldn't load settings. Using default values.")
                 self.parameter = "$nsgUser"
                 self.last_parameter = "$lastNsgUser"
-                self.whisperMessage = "Congratulations $user you have won $msg!"
-                self.send_whisper = False
                 self.unique_users = True
                 self.remove_moderators = True
                 Parent.Log("NSG", str(self.__dict__))
