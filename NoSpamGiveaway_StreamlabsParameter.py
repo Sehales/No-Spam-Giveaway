@@ -26,25 +26,30 @@ winnerListFile = os.path.join(dataFolder, "winners.csv")
 settingsFile = os.path.join(dataFolder, "settings.json")
 
 class Settings(object):
-    def __init__(self, settingsfile=None):
+    def __init__(seldf, sf=settingsFile):
         """ Load saved settings from file if available otherwise set default values. """
         try:
-            with codecs.open(settingsfile, encoding="utf-8", mode="r") as f:
-                self.__dict__ = json.load(f, encoding="utf-8")
-        except:
+            with codecs.open(sf, encoding="utf-8-sig", mode="r") as f:
+                self.__dict__ = json.load(f, encoding="utf-8-sig")
+                Parent.Log("NSG", "Config loaded!")
+                #Parent.Log("NSG", str(self.__dict__))                
+        except Exception as e:
                 Parent.Log("NSG", "Couldn't load settings. Using default values.")
+                Parent.Log("NSG", str(sys.exc_info()))
                 self.parameter = "$nsgUser"
                 self.last_parameter = "$lastNsgUser"
                 self.unique_users = True
                 self.remove_moderators = True
-                Parent.Log("NSG", str(self.__dict__))
+                #Parent.Log("NSG", str(self.__dict__))
 
     def reload(self, jsondata):
         """ Reload settings from AnkhBot user interface by given json data. """
+        Parent.Log("NSG", str(jsondata))
         self.__dict__ = json.loads(jsondata, encoding="utf-8")
 
 #External
 def Init():
+    Parent.Log("NSG", "")
     global ruuSettings
     ruuSettings = Settings(settingsFile)
     global lastUser
