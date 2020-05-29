@@ -26,7 +26,7 @@ winnerListFile = os.path.join(dataFolder, "winners.csv")
 settingsFile = os.path.join(dataFolder, "settings.json")
 
 class Settings(object):
-    def __init__(seldf, sf=settingsFile):
+    def __init__(self, sf=settingsFile):
         """ Load saved settings from file if available otherwise set default values. """
         try:
             with codecs.open(sf, encoding="utf-8-sig", mode="r") as f:
